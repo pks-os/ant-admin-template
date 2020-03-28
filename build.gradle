@@ -12,13 +12,33 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	implementation 'org.springframework.boot:spring-boot-starter'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+//	DB dependencies
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'mysql:mysql-connector-java'
 }
 
 test {
 	useJUnitPlatform()
+}
+
+
+bootRun {
+	sourceResources sourceSets.main
 }
